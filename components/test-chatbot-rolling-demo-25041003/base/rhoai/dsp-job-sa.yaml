@@ -1,0 +1,4 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: test-chatbot-rolling-demo-25041003-dsp-job

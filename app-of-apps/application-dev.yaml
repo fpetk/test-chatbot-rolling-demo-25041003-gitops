@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-chatbot-rolling-demo-25041003-app
+  namespace: openshift-gitops
+  finalizers: ["resources-finalizer.argocd.argoproj.io"]
+spec:
+  project: default
+  source:
+    path: ./components/test-chatbot-rolling-demo-25041003/overlays/development
+    repoURL: https://github.com/fpetk/test-chatbot-rolling-demo-25041003-gitops.git
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rhdh-app
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: openshift-gitops
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
